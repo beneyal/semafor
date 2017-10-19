@@ -113,9 +113,9 @@ public abstract class CommandLineOptions {
 	public class NewPathOption extends PathOption {
 		public NewPathOption(String name) { super(name); }
 		public void set(String path) throws InvalidOptionsException { 
-			if (exists(path))
-				throw new InvalidOptionsException("Path value of '" + name + "' option already exists: " + path);
-			else 
+//			if (exists(path))
+//				throw new InvalidOptionsException("Path value of '" + name + "' option already exists: " + path);
+//			else
 				super.set(path); 
 		}
 	}
@@ -123,9 +123,9 @@ public abstract class CommandLineOptions {
 	public class NewFilePathOption extends NewPathOption {
 		public NewFilePathOption(String name) { super(name); }
 		public void set(String path) throws InvalidOptionsException { 
-			if (!parentDirectoryExists(path))
-				throw new InvalidOptionsException("Parent directory of the value of '" + name + "' option does not exist: " + path);
-			else 
+//			if (!parentDirectoryExists(path))
+//				throw new InvalidOptionsException("Parent directory of the value of '" + name + "' option does not exist: " + path);
+//			else
 				super.set(path); 
 		}
 	}

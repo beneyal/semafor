@@ -53,6 +53,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -92,15 +93,17 @@ public class Semafor {
 	 */
 	public static void main(String[] args) throws Exception {
 		final FNModelOptions options = new FNModelOptions(args);
-		final File inputFile = new File(options.inputFile.get());
-		final File outputFile = new File(options.outputFile.get());
+		final File inputPath = new File(options.inputFile.get());
+		final File outputPath = new File(options.outputFile.get());
 		final String modelDirectory = options.modelDirectory.get();
 		final int numThreads = options.numThreads.present() ? options.numThreads.get() : 1;
 		final Semafor semafor = getSemaforInstance(modelDirectory);
-		semafor.runParser(
-				Files.newReaderSupplier(inputFile, Charsets.UTF_8),
-				Files.newWriterSupplier(outputFile, Charsets.UTF_8),
-				numThreads);
+		for (File f : inputPath.listFiles()) {
+			semafor.runParser(
+					Files.newReaderSupplier(f, Charsets.UTF_8),
+					Files.newWriterSupplier(new File(Paths.get(outputPath.toString(), f.getName()).toString()), Charsets.UTF_8),
+					numThreads);
+		}
 	}
 
 	public Semafor(Set<String> allRelatedWords,
